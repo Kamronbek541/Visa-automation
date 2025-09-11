@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL") 
+}
+
+// Model for the Travel Agencies
+model TravelCompany {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // A company can have many agents
+  agents Agent[]
+}
+
+// Model for the Travel Agents (users)
+model Agent {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String // We will store a hashed password here
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relation to the company they belong to
+  companyId String
+  company   TravelCompany @relation(fields: [companyId], references: [id])
+}
+
+// Model for the Traveler (the agent's client)
+model Client {
+  id        String   @id @default(cuid())
+  fullName  String
+  email     String? // Optional for now
+  phone     String? // Optional for now
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relation to the agent who created this client
+  // We will add this later when we build the Agent dashboard
+  
+  // A client can have many applications
+  applications Application[]
+}
+
+// Model for the Visa Application itself
+model Application {
+  id          String   @id @default(cuid())
+  // This is the unique code we give to the client
+  accessCode  String   @unique @default(cuid()) 
+  country     String   // e.g., "UK", "Germany"
+  status      String   @default("DRAFT") // DRAFT -> PENDING -> PROCESSING -> COMPLETED -> FAILED
+  
+  // All the form data will be stored here as a flexible JSON object
+  formData    Json?
+
+  // The final saved URL from the visa portal
+  resumeLink  String?
+  
+  // A message for failed attempts
+  errorMessage String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relation to the client this application belongs to
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id])
+}

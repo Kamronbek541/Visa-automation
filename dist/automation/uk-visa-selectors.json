@@ -1,0 +1,23 @@
+{
+    "startPage": {
+        "languageEnglish": "#languageCode_en",
+        "submitButton": "#submit"
+    },
+    "visaTypePage": {
+        "standardVisitorVisa": "#visaType_visit-visa-ooc-standard"
+    },
+    "countrySelectPage": {
+        "countryInput": "#countryCode_ui"
+    },
+    "loginPage": {
+        "emailInput": "#email",
+        "passwordInput_1": "#password1",
+        "passwordInput_2": "#password2"
+    },
+    "personalInfoPage": {
+        "givenNameInput": "#givenName",
+        "familyNameInput": "#familyName",
+        "genderMale": "#gender_1",
+        "genderFemale": "#gender_2"
+    }
+}
