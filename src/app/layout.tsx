@@ -1,61 +1,8 @@
-// import type { Metadata } from "next";
-// import { Inter } from "next/font/google";
-// import "./globals.css";
-// import Providers from "./providers"; // Импортируем наш провайдер
-
-// const inter = Inter({ subsets: ["latin"] });
-
-// export const metadata: Metadata = {
-//   title: "Visa Automation UZ",
-//   description: "Automating visa processes",
-// };
-
-// export default function RootLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>) {
-//   return (
-//     <html lang="en">
-//       <body className={inter.className}>
-//         <Providers>{children}</Providers> {/* Оборачиваем здесь */}
-//       </body>
-//     </html>
-//   );
-// }
-
-
-// import type { Metadata } from "next";
-// import { Inter } from "next/font/google";
-// import "./globals.css";
-// import Providers from "./providers";
-
-// const inter = Inter({ subsets: ["latin"] });
-
-// export const metadata: Metadata = {
-//   title: "Visa Automation UZ",
-//   description: "Automating visa processes",
-// };
-
-// export default function RootLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>) {
-//   return (
-//     <html lang="en">
-//       <body className={inter.className}>
-//         <Providers>{children}</Providers>
-//       </body>
-//     </html>
-//   );
-// }
-
-
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import Providers from "./providers";
+import "./globals.css"; // <-- ВОТ ЭТА ВАЖНАЯ СТРОКА
+import { TranslationProvider } from "@/contexts/TranslationContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -70,11 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html>
       <body className={inter.className}>
-        <Providers locale="en">
+        <TranslationProvider>
           {children}
-        </Providers>
+        </TranslationProvider>
       </body>
     </html>
   );
